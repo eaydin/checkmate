@@ -100,7 +100,7 @@ class MailObject(object):
 
 if __name__ == '__main__':
 
-    description="""Mail Sender for Pgpool Script Status, by Veriteknik - tech@veritech.net"""
+    description="""Mail Sender for CheckMate Script, original developed for pgpoolwatch by Veriteknik - tech@veritech.net"""
 
     parser = argparse.ArgumentParser(prog='sendmail.py', formatter_class=argparse.RawDescriptionHelpFormatter,
                                     fromfile_prefix_chars="@", description=description)
