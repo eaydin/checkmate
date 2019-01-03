@@ -1,6 +1,6 @@
 import signal
 import datetime
-from CheckMate.mate import run_curl_checker
+from CheckMate.webcheck import run_curl_checker
 from CheckMate.mate import run_mate_service
 import CheckMate.mate
 
