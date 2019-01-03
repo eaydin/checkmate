@@ -5,12 +5,14 @@ from http.server import HTTPServer
 from http.server import BaseHTTPRequestHandler
 import urllib.request
 import urllib.error
+import signal
+import time
 
 
 class MateRequestHandler(BaseHTTPRequestHandler):
 
     def respond_data(self, data):
-        data_json_bytes = ('\n' + json.dumps(data) + '\n').encode('utf-8')
+        data_json_bytes = (json.dumps(data) + '\n').encode('utf-8')
         self.wfile.write(data_json_bytes)
 
     def do_GET(self):
@@ -23,15 +25,14 @@ class MateRequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type:', 'text/html')
             self.end_headers()
-            now = datetime.datetime.now()
 
             print('address_string')
             print(self.address_string())
 
-
             data = {'status': 'running'}
-            data_json_bytes = ('\n' + json.dumps(data) + '\n').encode('utf-8')
-            self.wfile.write(data_json_bytes)
+            self.respond_data(data)
+            # data_json_bytes = ('\n' + json.dumps(data) + '\n').encode('utf-8')
+            # self.wfile.write(data_json_bytes)
 
         elif self.path == '/uptime':
             print("Uptime heartbeat received")
@@ -44,8 +45,6 @@ class MateRequestHandler(BaseHTTPRequestHandler):
 
             data = {'status': 'running', 'uptime': uptime}
             self.respond_data(data)
-
-
 
         else:
             print('Received different request')
@@ -95,9 +94,7 @@ if __name__ == '__main__':
     global server_start_time
     server_start_time = datetime.datetime.now()
 
-    import time
-    import signal
-
     run_mate_service(5555)
     run_curl_checker('https://veritech.net')
+
     signal.pause()
