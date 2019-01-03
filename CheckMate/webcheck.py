@@ -16,17 +16,22 @@ def curl_check(address):
         return False
 
 
-def curl_checker(address, timer=10):
+def curl_checker(addresses, timer=10):
 
     while True:
-        t = curl_check(address)
-        if t:
-            print("Status of {addr}: {resp}".format(addr=address, resp=t.status))
+
+        for address in addresses:
+            t = curl_check(address)
+            if t:
+                print("Status of {addr}: {resp}".format(addr=address, resp=t.status))
         time.sleep(timer)
 
 
-def run_curl_checker(address, timer=10):
+def run_curl_checker(addresses, timer=10):
 
-    t = threading.Thread(target=curl_checker, args=[address, timer])
+    print('Start checking for addresses')
+    print(addresses)
+
+    t = threading.Thread(target=curl_checker, args=[addresses, timer])
     t.daemon = True
     t.start()
