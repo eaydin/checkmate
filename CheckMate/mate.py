@@ -91,9 +91,6 @@ def run_curl_checker(address, timer=10):
 
 if __name__ == '__main__':
 
-    global server_start_time
-    server_start_time = datetime.datetime.now()
-
     run_mate_service(5555)
     run_curl_checker('https://veritech.net')
 
