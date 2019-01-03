@@ -93,7 +93,7 @@ def run_curl_checker(address, timer=10):
 if __name__ == '__main__':
 
     global server_start_time
-    server_start_time =  datetime.datetime.now()
+    server_start_time = datetime.datetime.now()
 
     import time
     import signal
