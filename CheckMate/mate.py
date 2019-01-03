@@ -27,8 +27,6 @@ class MateRequestHandler(BaseHTTPRequestHandler):
 
             data = {'status': 'running'}
             self.respond_data(data)
-            # data_json_bytes = ('\n' + json.dumps(data) + '\n').encode('utf-8')
-            # self.wfile.write(data_json_bytes)
 
         elif self.path == '/uptime':
             print("Uptime heartbeat received")
