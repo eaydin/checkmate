@@ -49,7 +49,7 @@ def mate_check_data(address_port):
         print('HTTP error while checking mate {mate}: {err}'.format(mate=mate_address, err=str(err)))
         return False
     except Exception as err:
-        print('Error while checking mate {mate}: {err}'.format(mate=mate, err=str(err)))
+        print('Error while checking mate {mate}: {err}'.format(mate=mate_address, err=str(err)))
         return False
 
 
