@@ -108,7 +108,7 @@ if __name__ == '__main__':
     parser.add_argument("--password", help="Password for email account", required=False)
     parser.add_argument("--server", help="Hostname/ip of email server", required=False)
     parser.add_argument("--receivers", nargs="+",
-                        help="List of receivers, multiple entries allowed seperated with spaces", required=False)
+                        help="List of receivers, multiple entries allowed separated with spaces", required=False)
     parser.add_argument("--port", default="587", help="Port for email server connection")
     parser.add_argument("--subject", help="Subject for email")
     parser.add_argument("--sender", help="The sender value for the email")
