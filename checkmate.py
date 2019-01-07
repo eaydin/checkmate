@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     start_status = False
 
-    if not args.serve_mate and not args.webc_heck and not args.mate and not args.tcp_check:
+    if not args.serve_mate and not args.web_check and not args.mate and not args.tcp_check:
         print('You should specify some arguments.')
         raise SystemExit(1)
     if args.serve_mate:
