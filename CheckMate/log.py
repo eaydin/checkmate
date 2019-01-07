@@ -8,7 +8,8 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 # Print to stdout
 
 ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
+# ch.setLevel(logging.INFO)
+ch.setLevel(logging.DEBUG)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 

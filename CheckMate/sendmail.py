@@ -5,6 +5,9 @@ from email.mime.text import MIMEText
 from email.utils import formataddr
 from email.header import Header
 from datetime import datetime
+import threading
+import time
+from CheckMate.log import logger
 
 
 class MailObject(object):
@@ -43,9 +46,9 @@ class MailObject(object):
         if self.remoteconn() and self.sender != '' and len(receivers) != 0:
             send_status = self.send()
         if send_status:
-            print("Mail sent!")
+            logger.info("mail - Mail sent!")
         else:
-            print("Mail transaction failed...")
+            logger.error("mail - Mail transaction failed...")
 
     def send(self):
         """
@@ -69,7 +72,7 @@ class MailObject(object):
             self.smtpObj.quit()
             return True
         except Exception as err:
-            print("Error while sending email: {0}".format(str(err)))
+            logger.error("Error while sending email: {0}".format(str(err)))
             return False
 
     def remoteconn(self):
@@ -85,7 +88,7 @@ class MailObject(object):
             self.smtpObj.login(self.user, self.password)
             return True
         except Exception as err:
-            print("Error while authenticating to the server: {0}".format(str(err)))
+            logger.error("Error while authenticating to the server: {0}".format(str(err)))
             return False
 
     def __enter__(self):
@@ -96,6 +99,31 @@ class MailObject(object):
             self.smtpObj.quit()
         except:
             pass
+
+
+def mail_success(user, password, receivers, server, port, subject, sender, append, timer):
+
+    receivers_list_send = receivers[0].split(' ')
+
+    while True:
+        msg = "CheckMate is running.<br>"
+        msg += "<p>{date}</p><br>".format(date=str(datetime.now()))
+        msg += append
+
+        a = MailObject(server=server, sender=sender, receivers=receivers_list_send, subject=subject, text=msg, port=port,
+                       user=user, password=password)
+
+        time.sleep(timer*60)
+
+
+def run_mail_success(user, password, receivers, server, port, subject, sender, append, timer):
+
+    logger.debug('mail - Starting success mailer (timer: {t})'.format(t=timer))
+
+    t = threading.Thread(target=mail_success, args=[user, password, receivers, server, port, subject, sender,
+                                                    append, timer])
+    t.daemon = True
+    t.start()
 
 
 if __name__ == '__main__':
