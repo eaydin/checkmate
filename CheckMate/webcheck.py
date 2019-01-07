@@ -3,6 +3,7 @@ import urllib.error
 import time
 import threading
 import json
+from CheckMate.log import logger
 
 
 def curl_check(address):
@@ -10,10 +11,10 @@ def curl_check(address):
         t = urllib.request.urlopen(address)
         return t
     except urllib.error.HTTPError as err:
-        print("HTTP error while connecting to {addr}: {err}".format(addr=address, err=str(err)))
+        logger.error("HTTP error while connecting to {addr}: {err}".format(addr=address, err=str(err)))
         return False
     except Exception as err:
-        print("Unknown error while connecting to {addr}: {err}".format(addr=address, err=str(err)))
+        logger.error("Unknown error while connecting to {addr}: {err}".format(addr=address, err=str(err)))
         return False
 
 
@@ -24,14 +25,15 @@ def curl_checker(addresses, timer=10):
         for address in addresses:
             t = curl_check(address)
             if t:
-                print("Status of {addr}: {resp}".format(addr=address, resp=t.status))
+                logger.info("webcheck {addr}: {resp}".format(addr=address, resp=t.status))
+            else:
+                logger.info("No response")
         time.sleep(timer)
 
 
 def run_curl_checker(addresses, timer=10):
 
-    print('Start checking for addresses')
-    print(addresses)
+    logger.debug('Start checking for addresses: {0}'.format(" ".join(addresses)))
 
     t = threading.Thread(target=curl_checker, args=[addresses, timer])
     t.daemon = True
@@ -46,10 +48,10 @@ def mate_check_data(address_port):
         t = urllib.request.urlopen(mate_address)
         return t
     except urllib.error.HTTPError as err:
-        print('HTTP error while checking mate {mate}: {err}'.format(mate=mate_address, err=str(err)))
+        logger.error('HTTP error while checking mate {mate}: {err}'.format(mate=mate_address, err=str(err)))
         return False
     except Exception as err:
-        print('Error while checking mate {mate}: {err}'.format(mate=mate_address, err=str(err)))
+        logger.error('Error while checking mate {mate}: {err}'.format(mate=mate_address, err=str(err)))
         return False
 
 
@@ -65,15 +67,16 @@ def mate_check(address_port, timer):
                 data_html = data.read()
                 encoding = data.info().get_content_charset('utf-8')
                 json_data = json.loads(data_html.decode(encoding))
-                print('Response of heartbeat is')
-                print(json_data)
+                logger.info('Response of heartbeat success.')
+                logger.debug('Response of heartbeat is')
+                logger.debug(json_data)
         time.sleep(timer)
 
 
 def run_mate_check(addresses, timer):
 
-    print('Starting mate checking for addresses')
-    print(addresses)
+    logger.info('Starting mate checking for addresses: {0}'.format(addresses))
+    # print(addresses)
 
     t = threading.Thread(target=mate_check, args=[addresses, timer])
     t.daemon = True

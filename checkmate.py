@@ -6,6 +6,7 @@ from CheckMate.webcheck import run_mate_check
 from CheckMate.tcp_check import run_tcp_check
 import CheckMate.mate
 import argparse
+from CheckMate.log import logger
 
 
 if __name__ == '__main__':
