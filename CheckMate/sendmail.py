@@ -100,10 +100,11 @@ class MailObject(object):
 
 if __name__ == '__main__':
 
-    description="""Mail Sender for CheckMate Script, original developed for pgpoolwatch by Veriteknik - tech@veritech.net"""
+    description="""Mail Sender for CheckMate Script, originally developed for pgpoolwatch 
+    by Veriteknik - tech@veritech.net"""
 
     parser = argparse.ArgumentParser(prog='sendmail.py', formatter_class=argparse.RawDescriptionHelpFormatter,
-                                    fromfile_prefix_chars="@", description=description)
+                                     fromfile_prefix_chars="@", description=description)
     parser.add_argument("--user", help="Username for email account", required=False)
     parser.add_argument("--password", help="Password for email account", required=False)
     parser.add_argument("--server", help="Hostname/ip of email server", required=False)
@@ -118,7 +119,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if args.user and args.password and args.port and args.sender and len(args.receivers) > 0 and args.server and args.subject:
+    if args.user and args.password and args.port and args.sender and len(args.receivers) > 0 and \
+            args.server and args.subject:
         receivers_list = args.receivers[0].split(' ')
 
         if not args.mail_on_success:

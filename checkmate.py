@@ -5,8 +5,8 @@ from CheckMate.mate import run_mate_service
 from CheckMate.webcheck import run_mate_check
 from CheckMate.tcp_check import run_tcp_check
 import CheckMate.mate
+import CheckMate.log
 import argparse
-from CheckMate.log import logger
 
 
 if __name__ == '__main__':
@@ -39,7 +39,36 @@ if __name__ == '__main__':
     parser.add_argument('--tcp-check-timer', help='Time to wait between each TCP check in seconds.', default=10,
                         required=False, type=int, metavar="<time>")
 
+    parser.add_argument('--debug-log', help='Path to debug log file.', default='/var/log/checkmate/checkmate.log',
+                        metavar='<log_path>', required=False)
+    parser.add_argument('--error-log', help='Path to error log file.', default='/var/log/checkmate/error.log',
+                        metavar='<log_path>', required=False)
+
     args = parser.parse_args()
+
+    # DEBUG logging
+
+    try:
+        debug_handler = CheckMate.log.logging.FileHandler(args.debug_log)
+        debug_handler.setLevel(CheckMate.log.logging.DEBUG)
+        debug_handler.setFormatter(CheckMate.log.formatter)
+        CheckMate.log.logger.addHandler(debug_handler)
+
+    except Exception as err:
+        CheckMate.log.logger.error('Error while writing to debug log file: {0}'.format(str(err)))
+
+    # ERROR logging
+
+    try:
+        error_formatter = CheckMate.log.logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(funcName)s:%(lineno)d %(message)s')
+        error_handler = CheckMate.log.logging.FileHandler('/var/log/checkmate/error.log')
+        error_handler.setLevel(CheckMate.log.logging.ERROR)
+        error_handler.setFormatter(error_formatter)
+        CheckMate.log.logger.addHandler(error_handler)
+
+    except Exception as err:
+        CheckMate.log.logger.error('Error while writing to error log file: {0}'.format(str(err)))
 
     start_status = False
 
