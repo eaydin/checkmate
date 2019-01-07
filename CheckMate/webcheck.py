@@ -25,15 +25,15 @@ def curl_checker(addresses, timer=10):
         for address in addresses:
             t = curl_check(address)
             if t:
-                logger.info("webcheck {addr}: {resp}".format(addr=address, resp=t.status))
+                logger.info("webcheck (timer: {t}) {addr}: {resp}".format(addr=address, resp=t.status, t=timer))
             else:
-                logger.info("No response")
+                logger.info("webcheck No response from: {addr}".format(addr=address))
         time.sleep(timer)
 
 
 def run_curl_checker(addresses, timer=10):
 
-    logger.debug('Start checking for addresses: {0}'.format(" ".join(addresses)))
+    logger.debug('Start checking (timer: {t}) for addresses: {a}'.format(a=" ".join(addresses), t=timer))
 
     t = threading.Thread(target=curl_checker, args=[addresses, timer])
     t.daemon = True
@@ -75,8 +75,7 @@ def mate_check(address_port, timer):
 
 def run_mate_check(addresses, timer):
 
-    logger.info('Starting mate checking for addresses: {0}'.format(addresses))
-    # print(addresses)
+    logger.debug('Start mate checking (timer: {t}) for addresses: {a}'.format(a=" ".join(addresses), t=timer))
 
     t = threading.Thread(target=mate_check, args=[addresses, timer])
     t.daemon = True
