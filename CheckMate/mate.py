@@ -3,6 +3,7 @@ import threading
 import datetime
 from http.server import HTTPServer
 from http.server import BaseHTTPRequestHandler
+from CheckMate.log import logger
 
 
 class MateRequestHandler(BaseHTTPRequestHandler):
@@ -16,21 +17,16 @@ class MateRequestHandler(BaseHTTPRequestHandler):
         global server_start_time
 
         if self.path == '/status':
-            print('Received Request')
-            print(self.client_address)
+            logger.info("mate - status request received from: {addr}".format(addr=self.client_address))
             self.send_response(200)
             self.send_header('Content-type:', 'text/html')
             self.end_headers()
-
-            print('address_string')
-            print(self.address_string())
 
             data = {'status': 'running'}
             self.respond_data(data)
 
         elif self.path == '/uptime':
-            print("Uptime heartbeat received")
-            print(self.client_address)
+            logger.info("mate - uptime heartbeat received from: {addr}".format(addr=self.client_address))
             self.send_response(200)
             self.send_header('Content-type:', 'text/html')
             self.end_headers()
@@ -41,7 +37,7 @@ class MateRequestHandler(BaseHTTPRequestHandler):
             self.respond_data(data)
 
         else:
-            print('Received different request')
+            logger.error('mate - Received different request')
 
 
 def run_mate_service(port, addr=''):

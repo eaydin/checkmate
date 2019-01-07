@@ -67,9 +67,7 @@ def mate_check(address_port, timer):
                 data_html = data.read()
                 encoding = data.info().get_content_charset('utf-8')
                 json_data = json.loads(data_html.decode(encoding))
-                logger.info('Response of heartbeat success.')
-                logger.debug('Response of heartbeat is')
-                logger.debug(json_data)
+                logger.info('Response of heartbeat success: {j}'.format(j=json_data))
         time.sleep(timer)
 
 
