@@ -10,7 +10,6 @@ def tcp_checker(address, port, close=2):
         s.connect((address, port))
         s.shutdown(close)
         logger.info("tcp - Success connecting to {addr}:{port}".format(addr=address, port=port))
-        # print("Success connecting to {addr}:{port}".format(addr=address, port=port))
         return True
     except socket.error as err:
         logger.error("tcp - Socket error connecting to {addr}:{port} - {err}".format(addr=address, port=port, err=str(err)))
@@ -24,7 +23,6 @@ def tcp_check(addresses, close=2, timer=10):
     while True:
         for addr_port in addresses:
             logger.debug("tcp - Checking {0}".format(addr_port))
-            # print('ADDR_PORT:', addr_port)
             if ':' not in addr_port:
                 logger.error('tcp - Port not specified on address: {addr}'.format(addr=addr_port))
             else:
