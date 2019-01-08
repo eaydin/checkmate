@@ -62,12 +62,12 @@ def mate_check(address_port, timer):
 
             data = mate_check_data(addr_port)
             if not data:
-                pass
+                logger.info('mate - No response from mate: {a}'.format(a=addr_port))
             else:
                 data_html = data.read()
                 encoding = data.info().get_content_charset('utf-8')
                 json_data = json.loads(data_html.decode(encoding))
-                logger.info('mate - Response of heartbeat success: {j}'.format(j=json_data))
+                logger.info('mate - Response of {a} heartbeat success: {j}'.format(a=addr_port, j=json_data))
         time.sleep(timer)
 
 
