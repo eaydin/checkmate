@@ -54,8 +54,8 @@ if __name__ == '__main__':
                         metavar='<log_path>', required=False)
 
     # Mail arguments
-    parser.add_argument('--send-success-mail', type=int, metavar="<timer_in_hours>",
-                        help='Send mail if program is running every x hours', default=12, required=False)
+    parser.add_argument('--send-success-mail', type=int, metavar="<timer_in_mins>",
+                        help='Send mail if program is running every x minutes', default=720, required=False)
     parser.add_argument('--mail-user', help="Username for email account", metavar="<username>", required=False)
     parser.add_argument('--mail-password', help="Password for email account", metavar="<password>", required=False)
     parser.add_argument('--mail-server', help="Hostname/IP of email server", metavar="<host>", required=False)
