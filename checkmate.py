@@ -114,13 +114,28 @@ if __name__ == '__main__':
         run_mate_service(args.serve_mate)
         start_status = True
     if args.web_check:
-        run_curl_checker(args.web_check, args.web_check_timer)
+        if len(args.web_check) == 1 and " " in args.web_check[0].strip():
+            # this is due to a bug in multiple domain specification with arguments passed in file
+            web_check_hosts = args.web_check[0].strip().split()
+        else:
+            web_check_hosts = args.web_check
+        run_curl_checker(web_check_hosts, args.web_check_timer)
         start_status = True
     if args.mate:
-        run_mate_check(args.mate, args.mate_timer)
+        if len(args.mate) == 1 and " " in args.mate[0].strip():
+            # this is due to a bug in multiple parameter specification with arguments passed in file
+            mate_check_hosts = args.mate[0].strip().split()
+        else:
+            mate_check_hosts = args.mate
+        run_mate_check(mate_check_hosts, args.mate_timer)
         start_status = True
     if args.tcp_check:
-        run_tcp_check(args.tcp_check, args.tcp_check_close, args.tcp_check_timer)
+        if len(args.tcp_check) == 1 and " " in args.tcp_check[0].strip():
+            # this is due to a bug in multiple parameter specification with arguments passed in file
+            tcp_check_hosts = args.tcp_check[0].strip().split()
+        else:
+            tcp_check_hosts = args.tcp_check
+        run_tcp_check(tcp_check_hosts, args.tcp_check_close, args.tcp_check_timer)
         start_status = True
 
     if start_status:

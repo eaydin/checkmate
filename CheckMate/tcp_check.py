@@ -6,9 +6,10 @@ from CheckMate.log import logger
 
 def tcp_checker(address, port, close=2):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(close)
     try:
         s.connect((address, port))
-        s.shutdown(close)
+        s.close()
         logger.info("tcp - Success connecting to {addr}:{port}".format(addr=address, port=port))
         return True
     except socket.error as err:
