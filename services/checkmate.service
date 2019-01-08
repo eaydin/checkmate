@@ -4,7 +4,7 @@ Documentation=https://github.com/eaydin/checkmate
 
 [Service]
 Type=simple
-ExecStart=/opt/checkmate/venv/bin/python /opt/checkmate/checkmate.py
+ExecStart=/opt/checkmate/venv/bin/python /opt/checkmate/checkmate.py @/opt/checkmate/settings.txt
 PIDFile=/var/run/checkmate.pid
 User=root
 Group=root
