@@ -43,6 +43,7 @@ def run_curl_checker(addresses, timer=10):
 def mate_check_data(address_port):
 
     mate_address = 'http://{addr_port}/uptime'.format(addr_port=address_port)
+    logger.info('mate - Checking {0}'.format(mate_address))
 
     try:
         t = urllib.request.urlopen(mate_address)
